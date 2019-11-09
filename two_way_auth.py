@@ -33,6 +33,13 @@ def get_oauth():
     auth = api.devices[3].location()
     return auth
 
+# 緯度経度の表示形式を変換
+def deg_to_dms(deg):
+    degree = int(deg)
+    minuit = int((deg - float(degree)) * 60)
+    second = round(((deg - float(degree)) * 60 - float(minuit)) * 60, 5)
+    return f'{degree}°{minuit}′{second}″'
+
 
 if __name__ == '__main__':
     auth = str(get_oauth())
@@ -41,8 +48,10 @@ if __name__ == '__main__':
     auth = auth.replace("False", "false")
 
     dic = json.loads(auth)
-    print(f"longitude: {dic['longitude']}")
-    print(f"latitude: {dic['latitude']}")
+    longitude = deg_to_dms(dic['longitude'])
+    latitude = deg_to_dms(dic['latitude'])
+    print(longitude)
+    print(latitude)
 
 
 
