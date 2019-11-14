@@ -8,11 +8,11 @@ def get_oauth():
     return auth
 
 
-def deg_to_dms(deg):
-    degree = str(int(deg))
-    minuit = str(int((deg - float(degree)) * 60))
-    second = str(round(((deg - float(degree)) * 60 - float(minuit)) * 60, 5))
-    return f'{degree}度{minuit}分{second}秒'
+# def deg_to_dms(deg):
+#     degree = str(int(deg))
+#     minuit = str(int((deg - float(degree)) * 60))
+#     second = str(round(((deg - float(degree)) * 60 - float(minuit)) * 60, 5))
+#     return f'{degree}度{minuit}分{second}秒'
 
 
 api = PyiCloudService('ychikara@unomaha.edu', 'Bakabaka0208')
@@ -47,6 +47,6 @@ def get_gps_from_iphone(api):
     auth = auth.replace("False", "false")
 
     dic = json.loads(auth)
-    longitude = deg_to_dms(dic['longitude'])
-    latitude = deg_to_dms(dic['latitude'])
+    longitude = round(dic['longitude'], 3)
+    latitude = round(dic['latitude'], 3)
     return [latitude, longitude]

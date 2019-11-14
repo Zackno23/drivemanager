@@ -15,5 +15,11 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="gps_log.sqlite" uuid="83afe239-e904-4ed5-8843-a1f127893be7">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/gps_log.sqlite</jdbc-url>
+    </data-source>
   </component>
 </project>
