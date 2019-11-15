@@ -2,18 +2,23 @@ import numpy as np
 
 
 def cal_rho(lon_a, lat_a, lon_b, lat_b):
-    ra = 6378.140  # equatorial radius (km)
-    rb = 6356.755  # polar radius (km)
-    F = (ra - rb) / ra  # flattening of the earth
-    rad_lat_a = np.radians(lat_a)
-    rad_lon_a = np.radians(lon_a)
-    rad_lat_b = np.radians(lat_b)
-    rad_lon_b = np.radians(lon_b)
-    pa = np.arctan(rb / ra * np.tan(rad_lat_a))
-    pb = np.arctan(rb / ra * np.tan(rad_lat_b))
-    xx = np.arccos(np.sin(pa) * np.sin(pb) + np.cos(pa) * np.cos(pb) * np.cos(rad_lon_a - rad_lon_b))
-    c1 = (np.sin(xx) - xx) * (np.sin(pa) + np.sin(pb)) ** 2 / np.cos(xx / 2) ** 2
-    c2 = (np.sin(xx) + xx) * (np.sin(pa) - np.sin(pb)) ** 2 / np.sin(xx / 2) ** 2
-    dr = F / 8 * (c1 - c2)
-    rho = ra * (xx + dr)
-    return rho
+    from math import sin, cos, sqrt, atan2, radians
+
+    # approximate radius of earth in km
+    R = 6373.0
+
+    lat1 = radians(lon_a)
+    lon1 = radians(lon_b)
+    lat2 = radians(lat_a)
+    lon2 = radians(lat_b)
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+    return distance
+    # print("Result:", distance)
+    # print("Should be:", 278.546, "km")
