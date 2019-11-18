@@ -1,24 +1,29 @@
-import numpy as np
+from math import sin, cos, acos, radians
+earth_rad = 6378.137
 
+def latlng_to_xyz(lat, lng):
+    rlat, rlng = radians(lat), radians(lng)
+    coslat = cos(rlat)
+    return coslat*cos(rlng), coslat*sin(rlng), sin(rlat)
 
-def cal_rho(lon_a, lat_a, lon_b, lat_b):
-    from math import sin, cos, sqrt, atan2, radians
+def dist_on_sphere(pos0, pos1, radius=earth_rad):
+    xyz0, xyz1 = latlng_to_xyz(*pos0), latlng_to_xyz(*pos1)
+    try:
 
-    # approximate radius of earth in km
-    R = 6373.0
+        distance =  acos(sum(x * y for x, y in zip(xyz0, xyz1)))*radius
+    except ValueError:
+        return 0
 
-    lat1 = radians(lon_a)
-    lon1 = radians(lon_b)
-    lat2 = radians(lat_a)
-    lon2 = radians(lat_b)
-
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = R * c
     return distance
-    # print("Result:", distance)
-    # print("Should be:", 278.546, "km")
+
+
+# Osaka = 34.702113, 135.494807
+# Tokyo = 35.681541, 139.767103
+# London = 51.476853, 0.0
+
+def get_distance(gps1, gps2):
+    return dist_on_sphere(gps1, gps2)
+
+
+# print(dist_on_sphere((39.926000, 141.095),(39.956000,141.071) )) # 403.63km
+# print(dist_on_sphere(London, Tokyo)) # 9571.22km

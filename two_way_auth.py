@@ -47,6 +47,6 @@ def get_gps_from_iphone(api):
     auth = auth.replace("False", "false")
 
     dic = json.loads(auth)
-    longitude = round(dic['longitude'], 3)
-    latitude = round(dic['latitude'], 3)
+    longitude = round(dic['longitude'], 6)
+    latitude = round(dic['latitude'], 6)
     return [latitude, longitude]
