@@ -35,6 +35,7 @@ for i in range(5):
     result = firebase.post(f'/drive-manager-18863/{table}', data)
     prev_gps = gps
     print(i)
-    # time.sleep()
+    time.sleep(1)
+
 
 
