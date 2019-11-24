@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 
 def sendGmailAttach(sub,body):
     sender, password = "chikara.f.yoshida@gmail.com", "Zackno213" # 送信元メールアドレスとgmailへのログイン情報
-    to = 'hima.hima.0427@gmail.com'  # 送信先メールアドレス
+    to = 'chikara.f.yoshida@gmail.com'  # 送信先メールアドレス
     sub = sub #メール件名
     body = body  # メール本文
     host, port = 'smtp.gmail.com', 587
@@ -36,11 +36,10 @@ def sendGmailAttach(sub,body):
     attachment.add_header("Content-Disposition", "attachment", filename=attach_file['name'])
     msg.attach(attachment)
 
-    # gmailへ接続(SMTPサーバーとして使用)
+    # gmailへ接続(SMTPサーバーとして使用)z
     gmail=SMTP("smtp.gmail.com", 587)
     gmail.starttls() # SMTP通信のコマンドを暗号化し、サーバーアクセスの認証を通す
     gmail.login(sender, password)
     gmail.send_message(msg)
 
-sendGmailAttach()
 
